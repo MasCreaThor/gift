@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
 
 // Hook personalizado para evitar problemas de hidratación
 function useClientOnly() {
@@ -13,44 +14,17 @@ function useClientOnly() {
   return isClient;
 }
 
-export default function CartaDigital() {
-  const [currentText, setCurrentText] = useState('');
-  const [isTyping, setIsTyping] = useState(false);
-  const [isUnfolding, setIsUnfolding] = useState(false);
-  const [unfoldProgress, setUnfoldProgress] = useState(0);
-  const [cursorPosition, setCursorPosition] = useState({ top: 0, left: 0 });
+export default function HomePage() {
   const [pageLoaded, setPageLoaded] = useState(false);
-  const [sealOpened, setSealOpened] = useState(false);
-  const [envelopeVisible, setEnvelopeVisible] = useState(true);
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
   const isClient = useClientOnly();
-  const textRef = useRef<HTMLDivElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const writingAreaRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  const mensajeCompleto = `Hola mi amor,
-
-Hoy 13 de agosto de 2025, celebramos juntos 4 años y 8 meses de nuestra hermosa relación. 
-
-Cada momento que hemos pasado juntos ha sido un aprendizaje que ha hecho más fuerte nuestra relación.
-Me he dado cuenta que en los días más grises tú tienes una fuerza increíble dentro de ti, que buscas la manera
-de solucionar los problemas y puedes ver soluciones que no alcanzo a visualizar, y eso me ha hecho sentir seguro y me genera confianza, entre otras sensaciones.
-
-Gracias por ser mi compañera, mi amiga, mi confidente, mi novia y el amorcito de mi vida. También gracias por tu paciencia, por tu amor incondicional,
-por cada sonrisa y carcajadas que sacas de mí, y por cada abrazo, por cada beso que me hace sentir muy enamorado y que todo está bien.
-
-Te amo mucho, aunque no lo diga todo el tiempo, pero siempre quiero que no te pase nada, que tengas lo necesario, y a veces pongo una mirada triste sin que lo notes
-cuando no puedo ayudarte. Todos los días le pido a Dios que te cuide. Para finalizar, te quiero decir que eres la mejor novia que he tenido.
-
-Con todo mi amor,
-Tu amorcito ❤️`;
-
-  // Efecto de fade-in de la página (4 segundos)
+  // Efecto de fade-in de la página
   useEffect(() => {
     const timer = setTimeout(() => {
       setPageLoaded(true);
-    }, 1000);
+    }, 500);
 
     return () => clearTimeout(timer);
   }, []);
@@ -58,7 +32,7 @@ Tu amorcito ❤️`;
   // Función para reproducir música
   const playMusic = () => {
     if (audioRef.current) {
-      audioRef.current.volume = 0.3; // Volumen al 30%
+      audioRef.current.volume = 0.2; // Volumen al 20% para música de fondo
       audioRef.current.loop = true; // Reproducción en bucle
       audioRef.current.play().then(() => {
         setIsMusicPlaying(true);
@@ -76,163 +50,18 @@ Tu amorcito ❤️`;
     }
   };
 
-  // Función para calcular la posición del cursor
-  const updateCursorPosition = () => {
-    if (textRef.current) {
-      const textElement = textRef.current;
-      const textContent = textElement.textContent || '';
-      const lastCharIndex = textContent.length - 1;
-      
-      if (lastCharIndex >= 0) {
-        // Crear un rango temporal para medir la posición
-        const range = document.createRange();
-        const textNode = textElement.firstChild;
-        
-        if (textNode) {
-          range.setStart(textNode, lastCharIndex);
-          range.setEnd(textNode, lastCharIndex);
-          
-          const rect = range.getBoundingClientRect();
-          const textRect = textElement.getBoundingClientRect();
-          
-          setCursorPosition({
-            top: rect.top - textRect.top,
-            left: rect.right - textRect.left
-          });
-        }
-      }
-    }
-  };
-
-  // Función para centrar la cámara en el área de escritura
-  const centerCameraOnWriting = () => {
-    if (writingAreaRef.current && isTyping) {
-      const writingArea = writingAreaRef.current;
-      const viewportHeight = window.innerHeight;
-      
-      // Obtener la posición del área de escritura
-      const writingRect = writingArea.getBoundingClientRect();
-      const writingCenter = writingRect.top + writingRect.height / 2;
-      const viewportCenter = viewportHeight / 2;
-      
-      // Calcular cuánto scroll necesitamos para centrar
-      const scrollNeeded = writingCenter - viewportCenter;
-      
-      // Solo hacer scroll si es necesario y significativo
-      if (Math.abs(scrollNeeded) > 50) {
-        window.scrollBy({
-          top: scrollNeeded,
-          behavior: 'smooth'
-        });
-      }
-    }
-  };
-
-  // Función para hacer scroll automático hacia el cursor
-  const scrollToCursor = () => {
-    if (textRef.current && isTyping) {
-      const textElement = textRef.current;
-      const viewportHeight = window.innerHeight;
-      
-      // Obtener la posición del cursor en relación al viewport
-      const textRect = textElement.getBoundingClientRect();
-      const cursorTop = textRect.top + cursorPosition.top;
-      
-      // Calcular la posición ideal del cursor (centro del viewport)
-      const idealCursorPosition = viewportHeight * 0.4; // 40% desde arriba
-      const currentCursorPosition = cursorTop;
-      
-      // Calcular cuánto scroll necesitamos
-      const scrollAmount = currentCursorPosition - idealCursorPosition;
-      
-      // Solo hacer scroll si es necesario
-      if (Math.abs(scrollAmount) > 30) {
-        window.scrollBy({
-          top: scrollAmount,
-          behavior: 'smooth'
-        });
-      }
-    }
-  };
-
-  // Función para abrir el sello
-  const openSeal = () => {
-    setSealOpened(true);
-    
-    // Reproducir música al abrir el sello
-    playMusic();
-    
-    // Desaparecer el sobre lentamente
-    setEnvelopeVisible(false);
-    
-    // Después de que desaparezca el sobre, mostrar la carta
-    setTimeout(() => {
-      setIsUnfolding(true);
-    }, 1000);
-  };
-
-  // Efecto de desdoble de la carta
+  // Reproducir música automáticamente cuando la página esté lista
   useEffect(() => {
-    if (isUnfolding) {
-      const unfoldTimer = setInterval(() => {
-        setUnfoldProgress(prev => {
-          if (prev >= 100) {
-            setIsUnfolding(false);
-            setIsTyping(true);
-            clearInterval(unfoldTimer);
-            return 100;
-          }
-          return prev + 2;
-        });
-      }, 50);
+    if (pageLoaded && isClient) {
+      const musicTimer = setTimeout(() => {
+        playMusic();
+      }, 1000); // Reproducir después de 1 segundo de que la página esté lista
 
-      return () => clearInterval(unfoldTimer);
+      return () => clearTimeout(musicTimer);
     }
-  }, [isUnfolding]);
+  }, [pageLoaded, isClient]);
 
-  // Efecto de escritura de la carta
-  useEffect(() => {
-    if (isTyping) {
-      let index = 0;
-      const timer = setInterval(() => {
-        if (index < mensajeCompleto.length) {
-          setCurrentText(mensajeCompleto.slice(0, index + 1));
-          index++;
-        } else {
-          setIsTyping(false);
-          clearInterval(timer);
-        }
-      }, 50);
-
-      return () => clearInterval(timer);
-    }
-  }, [isTyping]);
-
-  // Actualizar posición del cursor cuando cambie el texto
-  useEffect(() => {
-    if (isTyping) {
-      const timer = setTimeout(updateCursorPosition, 10);
-      return () => clearTimeout(timer);
-    }
-  }, [currentText, isTyping]);
-
-  // Sistema de cámara que sigue la escritura
-  useEffect(() => {
-    if (isTyping && cursorPosition.top > 0) {
-      // Primero centrar la cámara en el área de escritura
-      const centerTimer = setTimeout(centerCameraOnWriting, 100);
-      
-      // Luego ajustar la posición del cursor
-      const cursorTimer = setTimeout(scrollToCursor, 200);
-      
-      return () => {
-        clearTimeout(centerTimer);
-        clearTimeout(cursorTimer);
-      };
-    }
-  }, [cursorPosition, isTyping]);
-
-  // Generar posiciones fijas para las partículas para evitar problemas de hidratación
+  // Generar posiciones fijas para las partículas
   const particulas = [
     { left: '10%', top: '20%', delay: '0s', duration: '3s' },
     { left: '20%', top: '40%', delay: '0.5s', duration: '4s' },
@@ -264,24 +93,23 @@ Tu amorcito ❤️`;
         preload="auto"
         className="hidden"
       >
-        <source src="/Lo Que Siento.mp3" type="audio/mpeg" />
+        <source src="/Someone_You_Loved.mp3" type="audio/mpeg" />
         Tu navegador no soporta el elemento de audio.
       </audio>
 
-      {/* Overlay de fade-in desde negro (4 segundos) */}
+      {/* Overlay de fade-in */}
       <div 
-        className={`fixed inset-0 bg-black z-50 transition-opacity duration-[4000ms] ease-in-out ${
+        className={`fixed inset-0 bg-black z-50 transition-opacity duration-1000 ease-in-out ${
           pageLoaded ? 'opacity-0 pointer-events-none' : 'opacity-100'
         }`}
       />
 
       <div 
-        ref={containerRef}
-        className={`min-h-screen bg-gradient-to-br from-pink-100 via-red-100 to-purple-100 flex items-center justify-center p-4 transition-opacity duration-[4000ms] ease-in-out ${
+        className={`min-h-screen bg-gradient-to-br from-pink-100 via-red-100 to-purple-100 transition-opacity duration-1000 ease-in-out ${
           pageLoaded ? 'opacity-100' : 'opacity-0'
         }`}
       >
-        {/* Efecto de partículas de fondo - solo mostrar en el cliente */}
+        {/* Efecto de partículas de fondo */}
         {isClient && (
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             {particulas.map((particula, i) => (
@@ -312,144 +140,147 @@ Tu amorcito ❤️`;
           </div>
         )}
 
-        {/* Sobre de carta */}
-        <div className="relative max-w-2xl w-full my-8">
-          {/* Sobre cerrado */}
-          {envelopeVisible && (
-            <div className="relative">
-              {/* Sobre principal */}
-              <div 
-                className="relative w-96 h-64 mx-auto cursor-pointer transform hover:scale-105 transition-all duration-1000"
-                onClick={openSeal}
-                style={{
-                  opacity: envelopeVisible ? 1 : 0,
-                  transform: envelopeVisible ? 'scale(1)' : 'scale(0.8)',
-                  transition: 'opacity 1s ease-out, transform 1s ease-out'
-                }}
-              >
-                {/* Frente del sobre */}
-                <div className="absolute inset-0 bg-gradient-to-br from-white to-gray-100 rounded-lg shadow-2xl border-2 border-gray-300">
-                  {/* Líneas del sobre */}
-                  <div className="absolute top-1/2 left-0 right-0 h-px bg-gray-400"></div>
-                  <div className="absolute top-0 bottom-0 left-1/2 w-px bg-gray-400"></div>
-                  
-                  {/* Esquina doblada */}
-                  <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-gray-200 to-gray-300 transform rotate-45 origin-top-left rounded-tr-lg"></div>
-                  
-                  {/* Sello en el centro */}
-                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-gradient-to-br from-red-500 to-pink-600 rounded-full flex items-center justify-center shadow-lg cursor-pointer z-10">
+        {/* Botón para reproducir música si no está sonando */}
+        {!isMusicPlaying && pageLoaded && (
+          <div className="fixed top-4 right-4 z-40">
+            <button
+              onClick={playMusic}
+              className="bg-white/60 backdrop-blur-sm rounded-full p-3 shadow-lg hover:bg-white/80 transition-all duration-300 transform hover:scale-110"
+              title="Reproducir música"
+            >
+              <span className="text-2xl">🔇</span>
+            </button>
+          </div>
+        )}
+
+        {/* Contenido principal */}
+        <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-4">
+          {/* Encabezado principal */}
+          <div className="text-center mb-12 animate-fadeIn">
+            <div className="w-24 h-24 bg-gradient-to-br from-pink-400 to-red-500 rounded-full mx-auto mb-6 flex items-center justify-center shadow-lg">
+              <span className="text-white text-4xl">💕</span>
+            </div>
+            <h1 className="text-5xl font-bold text-gray-800 mb-4">
+              Mi Amor
+            </h1>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+              Aquí encontrarás todos los detalles especiales que te preparo cada mes. 
+              Cada uno está hecho con mucho amor para ti.
+            </p>
+          </div>
+
+          {/* Tarjetas de detalles */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl w-full">
+            {/* Carta de Amor - Agosto 2025 */}
+            <Link 
+              href="/carta"
+              className="group transform hover:scale-105 transition-all duration-300"
+            >
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-pink-200 hover:shadow-2xl transition-all duration-300 relative overflow-hidden">
+                {/* Decoración de fondo */}
+                <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-pink-200 to-red-200 rounded-full -translate-y-10 translate-x-10 opacity-50"></div>
+                <div className="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-br from-purple-200 to-pink-200 rounded-full translate-y-8 -translate-x-8 opacity-50"></div>
+                
+                {/* Icono principal */}
+                <div className="w-16 h-16 bg-gradient-to-br from-pink-400 to-red-500 rounded-full mx-auto mb-6 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
                     <span className="text-white text-2xl">💌</span>
                   </div>
                   
-                  {/* Texto indicativo */}
-                  <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-sm text-gray-600 font-medium">
-                    Haz clic en el sello para abrir
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Carta */}
-          {sealOpened && !envelopeVisible && (
-            <div 
-              className="bg-gradient-to-br from-white to-gray-50 rounded-lg shadow-2xl p-8 border border-gray-200 transform hover:scale-105 transition-transform duration-300 relative overflow-hidden"
-              style={{
-                opacity: sealOpened ? 1 : 0,
-                transform: sealOpened 
-                  ? (isUnfolding 
-                    ? `perspective(1000px) rotateX(${(100 - unfoldProgress) * 0.9}deg) scaleY(${0.1 + (unfoldProgress / 100) * 0.9})` 
-                    : 'perspective(1000px) rotateX(0deg) scaleY(1)')
-                  : 'scale(0.8)',
-                transition: sealOpened 
-                  ? (isUnfolding ? 'none' : 'transform 0.5s ease-out')
-                  : 'opacity 0.5s ease-out, transform 0.5s ease-out'
-              }}
-            >
-              {/* Línea de doblez que desaparece gradualmente */}
-              {isUnfolding && (
-                <div 
-                  className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-br from-transparent via-gray-300 to-transparent transform origin-top"
-                  style={{
-                    transform: `scaleY(${Math.max(0, 1 - unfoldProgress / 50)})`,
-                    opacity: Math.max(0, 1 - unfoldProgress / 30)
-                  }}
-                />
-              )}
-              
-              {/* Encabezado de la carta */}
-              <div className="text-center mb-8 animate-fadeIn">
-                <div className="w-16 h-16 bg-gradient-to-br from-pink-400 to-red-500 rounded-full mx-auto mb-4 flex items-center justify-center">
-                  <span className="text-white text-2xl">💌</span>
-                </div>
-                <h1 className="text-3xl font-bold text-gray-800 mb-2">
+                {/* Contenido de la tarjeta */}
+                <h3 className="text-2xl font-bold text-gray-800 mb-3 text-center">
                   Carta de Amor
-                </h1>
-                <p className="text-gray-600 text-lg">
-                  13 de Agosto, 2025
+                </h3>
+                <p className="text-gray-600 text-center mb-4">
+                  Agosto 2025
                 </p>
+                <p className="text-sm text-gray-500 text-center leading-relaxed">
+                  Una carta especial escrita con todo mi amor para celebrar nuestros 4 años y 8 meses juntos.
+                </p>
+                
+                {/* Indicador de hover */}
+                <div className="absolute bottom-4 right-4 text-pink-400 group-hover:translate-x-1 transition-transform duration-300">
+                  <span className="text-lg">→</span>
+                </div>
               </div>
+            </Link>
 
-              {/* Línea decorativa */}
-              <div className="w-full h-px bg-gradient-to-r from-transparent via-pink-300 to-transparent mb-8 animate-slideIn" />
+            {/* Código Secreto - Septiembre 2025 */}
+            <Link 
+              href="/codigo-secreto"
+              className="group transform hover:scale-105 transition-all duration-300"
+            >
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-purple-200 hover:shadow-2xl transition-all duration-300 relative overflow-hidden">
+                {/* Decoración de fondo */}
+                <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-purple-200 to-indigo-200 rounded-full -translate-y-10 translate-x-10 opacity-50"></div>
+                <div className="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-br from-blue-200 to-purple-200 rounded-full translate-y-8 -translate-x-8 opacity-50"></div>
+                
+                {/* Icono principal */}
+                <div className="w-16 h-16 bg-gradient-to-br from-purple-400 to-indigo-500 rounded-full mx-auto mb-6 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                  <span className="text-white text-2xl">🔐</span>
+                </div>
+                
+                {/* Contenido de la tarjeta */}
+                <h3 className="text-2xl font-bold text-gray-800 mb-3 text-center">
+                  Código Secreto
+                </h3>
+                <p className="text-gray-600 text-center mb-4">
+                  Septiembre 2025
+                </p>
+                <p className="text-sm text-gray-500 text-center leading-relaxed">
+                  Un mensaje misterioso que solo podrás desbloquear resolviendo pistas sobre nuestro amor.
+                </p>
+                
+                {/* Indicador de hover */}
+                <div className="absolute bottom-4 right-4 text-purple-400 group-hover:translate-x-1 transition-transform duration-300">
+                  <span className="text-lg">→</span>
+                </div>
+              </div>
+            </Link>
 
-              {/* Contenido de la carta */}
-              <div className="relative">
-                {/* Texto de la carta */}
-                <div 
-                  ref={textRef}
-                  className="text-gray-700 text-lg leading-relaxed font-serif whitespace-pre-line animate-fadeIn relative"
-                  style={{
-                    opacity: isUnfolding ? 0 : 1,
-                    transform: isUnfolding ? 'translateY(20px)' : 'translateY(0)',
-                    transition: 'opacity 0.5s ease-out, transform 0.5s ease-out'
-                  }}
-                >
-                  {currentText}
-                  
-                  {/* Cursor parpadeante que se mueve con el texto */}
-                  {isTyping && (
-                    <span 
-                      className="absolute w-0.5 h-6 bg-pink-500 animate-pulse"
-                      style={{
-                        top: cursorPosition.top,
-                        left: cursorPosition.left,
-                        transform: 'translateY(-2px)'
-                      }}
-                    />
-                  )}
+            {/* Tarjeta placeholder para más detalles */}
+            <div className="group transform hover:scale-105 transition-all duration-300 opacity-60">
+              <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-200 relative overflow-hidden">
+                {/* Decoración de fondo */}
+                <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-gray-200 to-gray-300 rounded-full -translate-y-10 translate-x-10 opacity-50"></div>
+                <div className="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-br from-gray-200 to-gray-300 rounded-full translate-y-8 -translate-x-8 opacity-50"></div>
+                
+                {/* Icono principal */}
+                <div className="w-16 h-16 bg-gradient-to-br from-gray-300 to-gray-400 rounded-full mx-auto mb-6 flex items-center justify-center shadow-lg">
+                  <span className="text-white text-2xl">💝</span>
+                </div>
+                
+                {/* Contenido de la tarjeta */}
+                <h3 className="text-2xl font-bold text-gray-600 mb-3 text-center">
+                  Más Detalles
+                </h3>
+                <p className="text-gray-500 text-center mb-4">
+                  Próximamente
+                </p>
+                <p className="text-sm text-gray-400 text-center leading-relaxed">
+                  Cada mes tendrás un detalle especial aquí...
+                </p>
+                
+                {/* Indicador */}
+                <div className="absolute bottom-4 right-4 text-gray-400">
+                  <span className="text-lg">⏳</span>
                 </div>
               </div>
             </div>
-          )}
+          </div>
 
-          {/* Sello de cera después de abrir */}
-          {sealOpened && !envelopeVisible && (
-            <div 
-              className="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-br from-red-500 to-pink-600 rounded-full flex items-center justify-center shadow-lg animate-stamp"
-              style={{
-                opacity: isUnfolding ? 0 : 1,
-                transform: isUnfolding ? 'scale(0) rotate(0deg)' : 'scale(1) rotate(360deg)',
-                transition: 'opacity 0.5s ease-out, transform 0.5s ease-out'
-              }}
-            >
-              <span className="text-white text-2xl">❤️</span>
+          {/* Mensaje de amor */}
+          <div className="mt-16 text-center max-w-4xl mx-auto">
+            <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-pink-200">
+              <h2 className="text-3xl font-bold text-gray-800 mb-4">
+                Te amo mucho ❤️
+              </h2>
+              <p className="text-lg text-gray-600 leading-relaxed">
+                Espero que disfrutes cada detallito que dejare aqui cada mes. <br />
+                Besitos 💋
+              </p>
             </div>
-          )}
+          </div>
         </div>
-
-        {/* Área de escritura invisible para el sistema de cámara */}
-        <div 
-          ref={writingAreaRef}
-          className="absolute pointer-events-none"
-          style={{
-            top: isTyping ? cursorPosition.top + 100 : 0,
-            left: 0,
-            width: '100%',
-            height: '200px',
-            opacity: 0
-          }}
-        />
       </div>
     </>
   );
