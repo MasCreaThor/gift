@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
 
 // Hook personalizado para evitar problemas de hidratación
 function useClientOnly() {
@@ -206,7 +207,7 @@ Tu amorcito ❤️`;
 
       return () => clearInterval(timer);
     }
-  }, [isTyping]);
+  }, [isTyping, mensajeCompleto]);
 
   // Actualizar posición del cursor cuando cambie el texto
   useEffect(() => {
@@ -230,7 +231,7 @@ Tu amorcito ❤️`;
         clearTimeout(cursorTimer);
       };
     }
-  }, [cursorPosition, isTyping]);
+  }, [cursorPosition, isTyping, centerCameraOnWriting, scrollToCursor]);
 
   // Generar posiciones fijas para las partículas para evitar problemas de hidratación
   const particulas = [
@@ -314,14 +315,14 @@ Tu amorcito ❤️`;
 
         {/* Botón de regreso */}
         <div className="fixed top-4 left-4 z-40">
-          <a
+          <Link
             href="/"
             className="bg-white/80 backdrop-blur-sm rounded-full p-3 shadow-lg hover:bg-white transition-all duration-300 transform hover:scale-110 flex items-center gap-2"
             title="Volver al inicio"
           >
             <span className="text-xl">🏠</span>
             <span className="text-sm font-medium">Inicio</span>
-          </a>
+          </Link>
         </div>
 
         {/* Sobre de carta */}

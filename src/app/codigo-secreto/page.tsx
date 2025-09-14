@@ -20,7 +20,6 @@ export default function CodigoSecreto() {
   const [pistasResueltas, setPistasResueltas] = useState(0);
   const [mensajeFinal, setMensajeFinal] = useState(false);
   const [intentos, setIntentos] = useState(0);
-  const [respuestaActual, setRespuestaActual] = useState('');
   const [mostrarAyuda, setMostrarAyuda] = useState(false);
   const [mostrarMensajeExito, setMostrarMensajeExito] = useState(false);
   const [mensajeExitoActual, setMensajeExitoActual] = useState('');
@@ -122,7 +121,6 @@ export default function CodigoSecreto() {
         // Avanzar a la siguiente pista
         setTimeout(() => {
           setCurrentPista(prev => prev + 1);
-          setRespuestaActual('');
         }, 6000); // Aumentar tiempo para que se vea el mensaje de éxito
       }
     } else {
@@ -139,7 +137,6 @@ export default function CodigoSecreto() {
     setPistasResueltas(0);
     setMensajeFinal(false);
     setIntentos(0);
-    setRespuestaActual('');
     setMostrarAyuda(false);
     setMostrarMensajeExito(false);
     setMensajeExitoActual('');
