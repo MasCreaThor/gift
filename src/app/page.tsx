@@ -237,7 +237,7 @@ export default function HomePage() {
               </div>
             </Link>
 
-            {/* Flores Amarillas - Octubre 2025 */}
+            {/* Flores Amarillas - Septiembre 2025 */}
             <Link 
               href="/rosas"
               className="group transform hover:scale-105 transition-all duration-300"
@@ -266,6 +266,39 @@ export default function HomePage() {
                 
                 {/* Indicador de hover */}
                 <div className="absolute bottom-4 right-4 text-yellow-400 group-hover:translate-x-1 transition-transform duration-300">
+                  <span className="text-lg">→</span>
+                </div>
+              </div>
+            </Link>
+
+            {/* Carta de Octubre - Octubre 2025 */}
+            <Link 
+              href="/carta-octubre"
+              className="group transform hover:scale-105 transition-all duration-300"
+            >
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-pink-200 hover:shadow-2xl transition-all duration-300 relative overflow-hidden">
+                {/* Decoración de fondo */}
+                <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-pink-200 to-red-200 rounded-full -translate-y-10 translate-x-10 opacity-50"></div>
+                <div className="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-br from-purple-200 to-pink-200 rounded-full translate-y-8 -translate-x-8 opacity-50"></div>
+                
+                {/* Icono principal */}
+                <div className="w-16 h-16 bg-gradient-to-br from-pink-400 to-red-500 rounded-full mx-auto mb-6 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                  <span className="text-white text-2xl">💌</span>
+                </div>
+                
+                {/* Contenido de la tarjeta */}
+                <h3 className="text-2xl font-bold text-gray-800 mb-3 text-center">
+                  Carta de Octubre
+                </h3>
+                <p className="text-gray-600 text-center mb-4">
+                  Octubre 2025
+                </p>
+                <p className="text-sm text-gray-500 text-center leading-relaxed">
+                  Una carta especial escrita con todo mi amor para celebrar nuestro aniversario mensual.
+                </p>
+                
+                {/* Indicador de hover */}
+                <div className="absolute bottom-4 right-4 text-pink-400 group-hover:translate-x-1 transition-transform duration-300">
                   <span className="text-lg">→</span>
                 </div>
               </div>
