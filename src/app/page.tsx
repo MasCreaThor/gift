@@ -304,35 +304,38 @@ export default function HomePage() {
               </div>
             </Link>
 
-            {/* Tarjeta placeholder para más detalles */}
-            <div className="group transform hover:scale-105 transition-all duration-300 opacity-60">
-              <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-200 relative overflow-hidden">
+            {/* Calendario de Cuenta Regresiva - Noviembre 2025 */}
+            <Link 
+              href="/calendario-noviembre"
+              className="group transform hover:scale-105 transition-all duration-300"
+            >
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-orange-200 hover:shadow-2xl transition-all duration-300 relative overflow-hidden">
                 {/* Decoración de fondo */}
-                <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-gray-200 to-gray-300 rounded-full -translate-y-10 translate-x-10 opacity-50"></div>
-                <div className="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-br from-gray-200 to-gray-300 rounded-full translate-y-8 -translate-x-8 opacity-50"></div>
+                <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-orange-200 to-amber-200 rounded-full -translate-y-10 translate-x-10 opacity-50"></div>
+                <div className="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-br from-yellow-200 to-orange-200 rounded-full translate-y-8 -translate-x-8 opacity-50"></div>
                 
                 {/* Icono principal */}
-                <div className="w-16 h-16 bg-gradient-to-br from-gray-300 to-gray-400 rounded-full mx-auto mb-6 flex items-center justify-center shadow-lg">
-                  <span className="text-white text-2xl">💝</span>
+                <div className="w-16 h-16 bg-gradient-to-br from-orange-400 to-amber-500 rounded-full mx-auto mb-6 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                  <span className="text-white text-2xl">📅</span>
                 </div>
                 
                 {/* Contenido de la tarjeta */}
-                <h3 className="text-2xl font-bold text-gray-600 mb-3 text-center">
-                  Más Detalles
+                <h3 className="text-2xl font-bold text-gray-800 mb-3 text-center">
+                  Cuenta Regresiva
                 </h3>
-                <p className="text-gray-500 text-center mb-4">
-                  Próximamente
+                <p className="text-gray-600 text-center mb-4">
+                  Noviembre 2025
                 </p>
-                <p className="text-sm text-gray-400 text-center leading-relaxed">
-                  Cada mes tendrás un detalle especial aquí...
+                <p className="text-sm text-gray-500 text-center leading-relaxed">
+                  Calendario cuenta los días hasta que llegue mi Princesa Fiona.
                 </p>
                 
-                {/* Indicador */}
-                <div className="absolute bottom-4 right-4 text-gray-400">
-                  <span className="text-lg">⏳</span>
+                {/* Indicador de hover */}
+                <div className="absolute bottom-4 right-4 text-orange-400 group-hover:translate-x-1 transition-transform duration-300">
+                  <span className="text-lg">→</span>
                 </div>
               </div>
-            </div>
+            </Link>
           </div>
 
           {/* Mensaje de amor */}
