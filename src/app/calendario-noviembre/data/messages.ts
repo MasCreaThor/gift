@@ -71,7 +71,7 @@ export const dailyMessages: { [key: number]: DailyMessage } = {
         type: 'mensaje'
     },
     29: {
-        message: 'Mañana viajas...yujuuu ¡Qué emoción! Espero que tengas todo listo. ✈️',
+        message: 'Mañana viajas...yujuuu ¡Qué emoción! Espero que tengas todo listo. 🚌',
         type: 'plan'
     },
     30: {

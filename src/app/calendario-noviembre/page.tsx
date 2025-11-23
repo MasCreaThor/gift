@@ -53,7 +53,7 @@ export default function CalendarioNoviembre() {
         <BackButton />
 
         {/* Contenido principal */}
-        <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-4 py-20">
+        <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-4 py-4 md:py-8">
 
           <Countdown
             timeRemaining={timeRemaining}
