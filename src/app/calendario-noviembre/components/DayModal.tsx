@@ -16,6 +16,14 @@ export default function DayModal({ selectedDay, onClose }: DayModalProps) {
         type: 'mensaje' as const
     };
 
+    const icon = dayNumber === 26
+        ? '🌹'
+        : messageData.type === 'recuerdo'
+            ? '💭'
+            : messageData.type === 'plan'
+                ? '🎯'
+                : '💕';
+
     return (
         <div
             className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
@@ -27,8 +35,7 @@ export default function DayModal({ selectedDay, onClose }: DayModalProps) {
             >
                 <div className="text-center mb-6">
                     <div className="text-5xl mb-4">
-                        {messageData.type === 'recuerdo' ? '💭' :
-                            messageData.type === 'plan' ? '🎯' : '💕'}
+                        {icon}
                     </div>
                     <h3 className="text-2xl font-bold text-gray-800 mb-2">
                         {format(selectedDate, "d 'de' MMMM")}
@@ -38,6 +45,20 @@ export default function DayModal({ selectedDay, onClose }: DayModalProps) {
                             messageData.type === 'plan' ? 'Plan para Ti' : 'Mensaje de Amor'}
                     </div>
                 </div>
+
+                {dayNumber === 26 && (
+                    <div className="mb-6 flex justify-center">
+                        <video
+                            src="/rosa.mp4"
+                            autoPlay
+                            loop
+                            muted
+                            playsInline
+                            className="rounded-2xl max-h-80 w-full object-cover"
+                        />
+                    </div>
+                )}
+
                 <p className="text-gray-700 text-lg leading-relaxed mb-6 text-center">
                     {messageData.message}
                 </p>

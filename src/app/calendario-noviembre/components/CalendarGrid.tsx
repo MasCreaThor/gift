@@ -69,8 +69,13 @@ export default function CalendarGrid({ startDate, arrivalDate, currentTime, getC
                     <div key={weekIndex} className="grid grid-cols-7 gap-2">
                         {week.map((date, dayIndex) => {
                             const dayInfo = getDayInfo(date);
-                            const icon = dayInfo.message.type === 'recuerdo' ? '💭' :
-                                dayInfo.message.type === 'plan' ? '🎯' : '💕';
+                            const icon = dayInfo.dayNumber === 26
+                                ? '🌹'
+                                : dayInfo.message.type === 'recuerdo'
+                                    ? '💭'
+                                    : dayInfo.message.type === 'plan'
+                                        ? '🎯'
+                                        : '💕';
                             const uniqueKey = `${weekIndex}-${dayIndex}-${date.getTime()}`;
 
                             return (

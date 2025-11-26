@@ -59,7 +59,7 @@ export const dailyMessages: { [key: number]: DailyMessage } = {
         type: 'mensaje'
     },
     26: {
-        message: 'Cargando...',
+        message: 'Una flor para la princesa Fiona 🌹',
         type: 'recuerdo'
     },
     27: {
