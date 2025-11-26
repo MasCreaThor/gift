@@ -59,7 +59,7 @@ export const dailyMessages: { [key: number]: DailyMessage } = {
         type: 'mensaje'
     },
     26: {
-        message: 'Soñé contigo hoy. Fue un sueño bonito, pero despertar sin ti no tanto. 🌙',
+        message: 'Cargando...',
         type: 'recuerdo'
     },
     27: {
