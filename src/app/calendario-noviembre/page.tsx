@@ -13,6 +13,7 @@ import DayModal from './components/DayModal';
 export default function CalendarioNoviembre() {
   const [pageLoaded, setPageLoaded] = useState(false);
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
+  const [backgroundVideo, setBackgroundVideo] = useState('/fondo.mp4');
   const isClient = useClientOnly();
 
   const {
@@ -33,6 +34,13 @@ export default function CalendarioNoviembre() {
     return () => clearTimeout(timer);
   }, []);
 
+  // Elegir aleatoriamente un fondo de video al cargar la página
+  useEffect(() => {
+    const videos = ['/fondo.mp4', '/fondo2.mp4'];
+    const randomIndex = Math.floor(Math.random() * videos.length);
+    setBackgroundVideo(videos[randomIndex]);
+  }, []);
+
   return (
     <>
       <MusicControl />
@@ -44,9 +52,21 @@ export default function CalendarioNoviembre() {
       />
 
       <div
-        className={`min-h-screen bg-gradient-to-br from-orange-100 via-amber-100 to-yellow-100 transition-opacity duration-1000 ease-in-out ${pageLoaded ? 'opacity-100' : 'opacity-0'
+        className={`relative min-h-screen bg-black transition-opacity duration-1000 ease-in-out ${pageLoaded ? 'opacity-100' : 'opacity-0'
           }`}
       >
+        {/* Video de fondo */}
+        <video
+          className="fixed inset-0 w-full h-full object-cover"
+          src={backgroundVideo}
+          autoPlay
+          loop
+          muted
+          playsInline
+        />
+
+        {/* Capa para oscurecer un poco el fondo y mejorar la legibilidad */}
+        <div className="fixed inset-0 bg-black/30" />
         {/* Efecto de partículas de fondo */}
         {isClient && <BackgroundParticles />}
 
