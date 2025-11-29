@@ -9,12 +9,12 @@ export function useServerTime() {
     const [timeRemaining, setTimeRemaining] = useState(() => ({ days: 0, hours: 0, minutes: 0, seconds: 0 }));
 
     // Fechas en zona horaria de Colombia
-    // 1 de diciembre de 2025 a las 00:00:00 hora de Colombia
+    // 30 de noviembre de 2025 a las 00:00:00 hora de Colombia
     const arrivalDate = useMemo(() => {
-        const date = createColombiaDate(2025, 11, 1, 0, 0, 0);
+        const date = createColombiaDate(2025, 10, 30, 0, 0, 0);
         if (isNaN(date.getTime())) {
             console.error('Error creando arrivalDate, usando fecha local');
-            return new Date(2025, 11, 1, 0, 0, 0);
+            return new Date(2025, 10, 30, 0, 0, 0);
         }
         return date;
     }, []);

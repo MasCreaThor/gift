@@ -122,7 +122,7 @@ export default function Countdown({ timeRemaining, arrivalDate, isLoading }: Cou
                             Llegada estimada: <span className="font-semibold text-orange-600">
                                 {arrivalDate && !isNaN(arrivalDate.getTime())
                                     ? format(arrivalDate, "d 'de' MMMM, yyyy")
-                                    : '1 de diciembre, 2025'
+                                    : '30 de noviembre, 2025'
                                 }
                             </span>
                         </span>

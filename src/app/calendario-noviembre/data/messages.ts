@@ -71,15 +71,11 @@ export const dailyMessages: { [key: number]: DailyMessage } = {
         type: 'mensaje'
     },
     29: {
-        message: 'Mañana viajas...yujuuu ¡Qué emoción! Espero que tengas todo listo. 🚌',
+        message: '¡Hoy viajas en la noche! ¡Qué emoción! Espero que tengas todo listo. Te estaré esperando. Ño, mentiras, ño cuedo, tu debes venir a verme al trabajo😞',
         type: 'plan'
     },
     30: {
-        message: '¡Buen viaje mi vida! Dios me las acompañe en el camino. Las estaré esperando. 🙏❤️',
-        type: 'mensaje'
-    },
-    1: {
-        message: '¡ES HOY, ES HOY! ¡Por fin! Si estas leyendo esto es porque Dios lo ha permitido. 💕✨',
+        message: '¡ES HOY, ES HOY! ¡Por fin! Si estas leyendo esto es porque Dios lo ha permitido. ¡Bienvenida mi vida! 💕✨',
         type: 'mensaje'
     }
 };
