@@ -1,4 +1,5 @@
 import { format } from 'date-fns';
+import { useRef, useEffect } from 'react';
 import { dailyMessages } from '../data/messages';
 
 interface DayModalProps {
@@ -7,10 +8,38 @@ interface DayModalProps {
 }
 
 export default function DayModal({ selectedDay, onClose }: DayModalProps) {
-    if (selectedDay === null) return null;
+    const videoRef = useRef<HTMLVideoElement>(null);
 
-    const selectedDate = new Date(selectedDay);
-    const dayNumber = selectedDate.getDate();
+    // Calcular dayNumber antes de cualquier return condicional
+    const selectedDate = selectedDay !== null ? new Date(selectedDay) : null;
+    const dayNumber = selectedDate ? selectedDate.getDate() : null;
+
+    // Reproducir video con audio cuando se abre el modal del día 30
+    useEffect(() => {
+        if (dayNumber === 30 && videoRef.current) {
+            const video = videoRef.current;
+            const playPromise = video.play();
+            
+            if (playPromise !== undefined) {
+                playPromise
+                    .then(() => {
+                        // Si la reproducción es exitosa, activar el audio
+                        video.muted = false;
+                    })
+                    .catch((error) => {
+                        // Si falla el autoplay, intentar reproducir sin muted
+                        console.log('Autoplay con audio bloqueado, intentando reproducir...');
+                        video.muted = false;
+                        video.play().catch(() => {
+                            console.log('El navegador requiere interacción del usuario para reproducir audio');
+                        });
+                    });
+            }
+        }
+    }, [dayNumber]);
+
+    if (selectedDay === null || selectedDate === null || dayNumber === null) return null;
+
     const messageData = dailyMessages[dayNumber] || {
         message: `Día ${dayNumber}: Cada día que pasa me acerca más a ti. 💕`,
         type: 'mensaje' as const
@@ -53,6 +82,19 @@ export default function DayModal({ selectedDay, onClose }: DayModalProps) {
                             autoPlay
                             loop
                             muted
+                            playsInline
+                            className="rounded-2xl max-h-80 w-full object-cover"
+                        />
+                    </div>
+                )}
+
+                {dayNumber === 30 && (
+                    <div className="mb-6 flex justify-center">
+                        <video
+                            ref={videoRef}
+                            src="/EsHoy.mp4"
+                            autoPlay
+                            loop
                             playsInline
                             className="rounded-2xl max-h-80 w-full object-cover"
                         />

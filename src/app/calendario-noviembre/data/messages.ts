@@ -75,7 +75,7 @@ export const dailyMessages: { [key: number]: DailyMessage } = {
         type: 'plan'
     },
     30: {
-        message: '¡ES HOY, ES HOY! ¡Por fin! Si estas leyendo esto es porque Dios lo ha permitido. ¡Bienvenida mi vida! 💕✨',
+        message: '¡ES HOY, ES HOY! ¡Por fin! Si estas leyendo esto es porque Dios lo ha permitido. 💕✨',
         type: 'mensaje'
     }
 };
