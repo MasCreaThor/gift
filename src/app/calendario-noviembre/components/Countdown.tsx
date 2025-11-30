@@ -40,7 +40,7 @@ export default function Countdown({ timeRemaining, arrivalDate, isLoading }: Cou
 
                     {/* Título */}
                     <h1 className="text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-amber-600 mb-2 tracking-tight">
-                        Cuenta Regresiva
+                        {isFinished ? 'Cuenta Regresiva Finalizada' : 'Cuenta Regresiva'}
                     </h1>
 
                     {/* Descripción */}
@@ -121,8 +121,8 @@ export default function Countdown({ timeRemaining, arrivalDate, isLoading }: Cou
                         <span className="text-xs md:text-sm font-light">
                             Llegada estimada: <span className="font-semibold text-orange-600">
                                 {arrivalDate && !isNaN(arrivalDate.getTime())
-                                    ? format(arrivalDate, "d 'de' MMMM, yyyy")
-                                    : '30 de noviembre, 2025'
+                                    ? format(arrivalDate, "d 'de' MMMM, yyyy 'a las' h:mm a")
+                                    : '30 de noviembre, 2025 a las 6:30 PM'
                                 }
                             </span>
                         </span>

@@ -9,14 +9,12 @@ export function useServerTime() {
     const [timeRemaining, setTimeRemaining] = useState(() => ({ days: 0, hours: 0, minutes: 0, seconds: 0 }));
 
     // Fechas en zona horaria de Colombia
-    // 30 de noviembre de 2025 a las 00:00:00 hora de Colombia
+    // 30 de noviembre de 2025 a las 18:30:00 (6:30 PM) hora de Colombia
     const arrivalDate = useMemo(() => {
-        const date = createColombiaDate(2025, 10, 30, 0, 0, 0);
-        if (isNaN(date.getTime())) {
-            console.error('Error creando arrivalDate, usando fecha local');
-            return new Date(2025, 10, 30, 0, 0, 0);
-        }
-        return date;
+        // Crear la fecha objetivo: 18:30 en Colombia = 23:30 UTC (Colombia es UTC-5)
+        // Usamos utcToColombiaTime para mantener consistencia con getCurrentColombiaTime
+        const utcTarget = new Date(Date.UTC(2025, 10, 30, 23, 30, 0));
+        return utcToColombiaTime(utcTarget);
     }, []);
 
     // 13 de noviembre de 2025 a las 00:00:00 hora de Colombia
